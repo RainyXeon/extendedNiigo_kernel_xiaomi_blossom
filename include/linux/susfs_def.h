@@ -45,8 +45,9 @@
  * task_struct->thread_info.flags => storing flag 'TIF_'
  */
 
-// thread_info->flags is unsigned long :D
+ // thread_info->flags is unsigned long :D
 #define TIF_NON_ROOT_USER_APP_PROC 33
+#define TIF_PROC_SU_NOT_ALLOWED 34
 
 #define AS_FLAGS_SUS_PATH 24
 #define AS_FLAGS_SUS_MOUNT 25
@@ -65,7 +66,7 @@
 #define ND_STATE_OPEN_LAST 64
 #define ND_STATE_LAST_SDCARD_SUS_PATH 128
 #define ND_FLAGS_LOOKUP_LAST		0x2000000
-
+ 
 #define MAGIC_MOUNT_WORKDIR "/debug_ramdisk/workdir"
 #define DATA_ADB_UMOUNT_FOR_ZYGOTE_SYSTEM_PROCESS "/data/adb/susfs_umount_for_zygote_system_process"
 #define DATA_ADB_NO_AUTO_ADD_SUS_BIND_MOUNT "/data/adb/susfs_no_auto_add_sus_bind_mount"
@@ -80,12 +81,12 @@ static inline void susfs_set_current_non_root_user_app_proc(void) {
 	set_ti_thread_flag(&current->thread_info, TIF_NON_ROOT_USER_APP_PROC);
 }
 
-static inline bool susfs_starts_with(const char *str, const char *prefix) {
-    while (*prefix) {
-        if (*str++ != *prefix++)
-            return false;
-    }
-    return true;
+static inline bool susfs_is_current_proc_su_not_allowed(void) {
+	return test_ti_thread_flag(&current->thread_info, TIF_PROC_SU_NOT_ALLOWED);
+}
+
+static inline void susfs_set_current_proc_su_not_allowed(void) {
+	set_ti_thread_flag(&current->thread_info, TIF_PROC_SU_NOT_ALLOWED);
 }
 
 #endif // #ifndef KSU_SUSFS_DEF_H
