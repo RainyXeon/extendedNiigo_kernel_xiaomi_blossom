@@ -52,6 +52,7 @@
  // thread_info->flags is unsigned long :D
 #define TIF_NON_ROOT_USER_APP_PROC 33
 #define TIF_PROC_SU_NOT_ALLOWED 34
+#define TIF_PROC_UMOUNTED 33
 
 #define AS_FLAGS_SUS_PATH 24
 #define AS_FLAGS_SUS_MOUNT 25
