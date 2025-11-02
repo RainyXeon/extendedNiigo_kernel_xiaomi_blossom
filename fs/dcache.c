@@ -2216,7 +2216,6 @@ struct dentry *__d_lookup_rcu(const struct dentry *parent,
 			continue;
 		if (dentry_cmp(dentry, str, hashlen_len(hashlen)) != 0)
 			continue;
-		}
 		*seqp = seq;
 		return dentry;
 	}
